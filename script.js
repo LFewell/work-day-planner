@@ -1,6 +1,6 @@
 
 var today = moment();
-$("#currentDay").text(today.format("dddd, MMMM Mo, h:mm a"));
+$("#currentDay").text(today.format("dddd, MMMM Do, h:mm a"));
 
 $(".saveBtn").on("click", storeData);
 
@@ -13,19 +13,30 @@ function storeData() {
 $("#9").val(localStorage.getItem("9"));
 $("#10").val(localStorage.getItem("10"));
 
-function colorChange() {
+
+function setColor() {
+
     var currentTime = today.hours();
-    var divTime = parseInt($(".time-block").attr("id"));
-    console.log(divTime);
-    console.log(currentTime);    
-    if (divTime < currentTime) {
-        $(".time-block").addClass("past");
+
+    for (var i = 0; i < $(".time-block").length; i++) {
         
-    } else if (divTime === currentTime) {
-        $(".time-block").removeClass("past");
-         $(this).removeClass("future");
-         $(this).addClass("present");
+        var targetId = $(".time-block")[i].id;
+        var el = $(".time-block")[i];
+        console.log(targetId);
+        console.log(currentTime);
+
+        if (targetId < currentTime ) {
+            el.classList.add("past");
+        } else if (targetId == currentTime ) {
+            el.classList.remove("past");
+            el.classList.remove("future");
+            el.classList.add("present");
+        } else {
+            el.classList.add("future");
+            el.classList.remove("past")
+            el.classList.remove("present")
+        }
     }
 }
 
-colorChange();
+setColor();
